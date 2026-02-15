@@ -200,10 +200,18 @@ const LiveDemo = () => {
                             >
                                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-dental-teal" />
                                 <div className="flex justify-between items-start mb-3">
-                                    <h4 className="font-bold text-slate-900 flex items-center gap-2">
-                                        <User className="w-4 h-4 text-slate-400" />
-                                        {apt.patient_name || 'New Patient'}
-                                    </h4>
+                                    <div>
+                                        <h4 className="font-bold text-slate-900 flex items-center gap-2">
+                                            <User className="w-4 h-4 text-slate-400" />
+                                            {apt.patient_name || 'New Patient'}
+                                        </h4>
+                                        {apt.phone_number && (
+                                            <div className="text-xs text-slate-500 flex items-center gap-2 mt-1 ml-6 font-medium">
+                                                <Phone className="w-3 h-3" />
+                                                {apt.phone_number}
+                                            </div>
+                                        )}
+                                    </div>
                                     <span className="text-xs font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded border border-slate-100">
                                         {apt.appointment_time ? format(new Date(apt.appointment_time), 'h:mm a') : 'Now'}
                                     </span>
