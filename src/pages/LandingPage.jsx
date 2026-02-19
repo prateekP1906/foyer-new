@@ -20,7 +20,7 @@ const LandingPage = () => {
             {/* Navbar */}
             <nav className="flex justify-between items-center p-6 max-w-7xl mx-auto relative z-10">
                 <div className="text-2xl font-bold flex items-center gap-2 text-slate-900">
-                    <img src={logo} alt="Foyer Logo" className="w-10 h-10 object-contain" /> Foyer
+                    <img src={logo} alt="FoyerCalls Logo" className="w-10 h-10 object-contain" /> FoyerCalls
                 </div>
                 <div className="flex items-center gap-8">
                     <button
@@ -61,7 +61,7 @@ const LandingPage = () => {
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-dental-teal to-blue-500">Reimagined.</span>
                     </h1>
                     <p className="text-xl md:text-2xl text-slate-500 mb-12 max-w-2xl mx-auto leading-relaxed">
-                        Foyer handles calls, bookings, and inquiries with human-level AI, so you can focus on patient care.
+                        FoyerCalls handles calls, bookings, and inquiries with human-level AI, so you can focus on patient care.
                     </p>
 
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4">
