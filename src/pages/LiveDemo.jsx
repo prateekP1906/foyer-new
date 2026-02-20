@@ -101,7 +101,7 @@ const LiveDemo = () => {
                 </div>
 
                 <div className="absolute top-10 left-10 text-2xl font-bold text-slate-900 flex items-center gap-2 z-10">
-                    <img src={logo} alt="FoyerCalls Logo" className="w-8 h-8 object-contain" /> FoyerCalls Demo
+                    <img src={logo} alt="Logo" className="w-8 h-8 object-contain" /> Live Demo
                 </div>
 
                 <div className="text-center space-y-8 z-10 relative">

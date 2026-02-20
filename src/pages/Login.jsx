@@ -34,9 +34,9 @@ const Login = () => {
         <div className="min-h-screen flex items-center justify-center bg-dental-mint/30 font-sans text-slate-deep">
             <div className="bg-white p-10 rounded-2xl shadow-lg border border-white/50 w-full max-w-md">
                 <div className="flex justify-center mb-6">
-                    <img src={logo} alt="FoyerCalls Logo" className="w-20 h-20 object-contain" />
+                    <img src={logo} alt="Logo" className="w-20 h-20 object-contain" />
                 </div>
-                <h2 className="text-2xl font-bold text-center mb-2">FoyerCalls Login</h2>
+                <h2 className="text-2xl font-bold text-center mb-2">Login</h2>
                 <p className="text-slate-500 text-center mb-6">Access your dashboard</p>
 
                 {error && (
