@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { useNavigate, Link } from 'react-router-dom';
 import { Shield } from 'lucide-react';
-import logo from '../assets/logo.png';
+
 
 const Signup = () => {
     const [email, setEmail] = useState('');
@@ -62,7 +62,9 @@ const Signup = () => {
         <div className="min-h-screen flex items-center justify-center bg-dental-mint/30 font-sans text-slate-deep">
             <div className="bg-white p-10 rounded-2xl shadow-lg border border-white/50 w-full max-w-md">
                 <div className="flex justify-center mb-6">
-                    <img src={logo} alt="Logo" className="w-20 h-20 object-contain" />
+                    <div className="w-20 h-20 bg-dental-teal/20 rounded-full flex items-center justify-center">
+                        <Shield className="w-12 h-12 text-dental-teal" />
+                    </div>
                 </div>
                 <h2 className="text-2xl font-bold text-center mb-2">Create Account</h2>
                 <p className="text-slate-500 text-center mb-6">Join today</p>

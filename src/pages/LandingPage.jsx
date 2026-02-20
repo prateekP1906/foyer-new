@@ -3,7 +3,7 @@ import React from 'react';
 import { Shield, Clock, Star, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png';
+
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -20,7 +20,9 @@ const LandingPage = () => {
             {/* Navbar */}
             <nav className="flex justify-between items-center p-6 max-w-7xl mx-auto relative z-10">
                 <div className="text-2xl font-bold flex items-center gap-2 text-slate-900">
-                    <img src={logo} alt="Logo" className="w-10 h-10 object-contain" />
+                    <div className="w-10 h-10 bg-dental-teal/20 rounded-lg flex items-center justify-center">
+                        <Shield className="w-6 h-6 text-dental-teal" />
+                    </div>
                 </div>
                 <div className="flex items-center gap-8">
                     <button

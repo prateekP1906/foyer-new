@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import { format } from 'date-fns';
 import { supabase } from '../supabaseClient';
 import { RetellWebClient } from 'retell-client-js-sdk';
-import logo from '../assets/logo.png';
+
 
 const LiveDemo = () => {
     const [isCallActive, setIsCallActive] = useState(false);
@@ -101,7 +101,9 @@ const LiveDemo = () => {
                 </div>
 
                 <div className="absolute top-10 left-10 text-2xl font-bold text-slate-900 flex items-center gap-2 z-10">
-                    <img src={logo} alt="Logo" className="w-8 h-8 object-contain" /> Live Demo
+                    <div className="w-8 h-8 bg-dental-teal/20 rounded-lg flex items-center justify-center">
+                        <Mic className="w-5 h-5 text-dental-teal" />
+                    </div> Live Demo
                 </div>
 
                 <div className="text-center space-y-8 z-10 relative">
