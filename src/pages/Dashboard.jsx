@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Phone, Calendar, CheckCircle, AlertCircle, DollarSign, Users, Briefcase, Edit, X, Trash2, Plus, User, Clock } from 'lucide-react';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import logo from '../assets/logo.png';
+
 
 const Dashboard = () => {
     const [appointments, setAppointments] = useState([]);
@@ -164,7 +164,7 @@ const Dashboard = () => {
     if (loading) return (
         <div className="flex items-center justify-center h-screen bg-slate-50">
             <div className="flex flex-col items-center gap-4">
-                <img src={logo} className="w-12 h-12 animate-bounce" />
+
                 <span className="text-slate-400 font-medium">Loading Dashboard...</span>
             </div>
         </div>
