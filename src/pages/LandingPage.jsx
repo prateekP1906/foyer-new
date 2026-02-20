@@ -20,8 +20,7 @@ const LandingPage = () => {
             {/* Navbar */}
             <nav className="flex justify-between items-center p-6 max-w-7xl mx-auto relative z-10">
                 <div className="text-2xl font-bold flex items-center gap-2 text-slate-900 cursor-pointer" onClick={() => navigate('/')}>
-                    <img src="/logo.png" alt="Foyer Logo" className="w-10 h-10 object-contain" />
-                    <span>Foyer</span>
+                    <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain" />
                 </div>
 
                 <div className="flex items-center gap-8">

@@ -55,7 +55,7 @@ const Login = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full p-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-dental-teal"
-                            placeholder="doctor@dentistai.com"
+                            placeholder="doctor@example.com"
                             required
                         />
                     </div>
