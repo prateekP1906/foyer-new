@@ -60,14 +60,19 @@ const Dashboard = () => {
 
     const fetchData = async () => {
         setLoading(true);
-        const { data, error } = await supabase
-            .from('appointments')
-            .select('*')
-            .order('appointment_time', { ascending: true });
+        const { data: { user: authUser } } = await supabase.auth.getUser();
 
-        if (data) {
-            setAppointments(data);
-            calculateStats(data);
+        if (authUser) {
+            const { data, error } = await supabase
+                .from('appointments')
+                .select('*')
+                .eq('clinic_id', authUser.id)
+                .order('appointment_time', { ascending: true });
+
+            if (data) {
+                setAppointments(data);
+                calculateStats(data);
+            }
         }
         setLoading(false);
     };
