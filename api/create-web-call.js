@@ -25,22 +25,24 @@ export default async function handler(req, res) {
     try {
         const { clinic_id } = req.body;
 
-        const response = await fetch('https://api.retellai.com/v2/create-web-call', {
+        const response = await fetch('https://api.vapi.ai/call/web', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${process.env.RETELL_API_KEY}`
+                'Authorization': `Bearer ${process.env.VAPI_API_KEY}`
             },
             body: JSON.stringify({
-                agent_id: process.env.RETELL_AGENT_ID,
-                retell_llm_dynamic_variables: {
-                    clinic_id
+                assistantId: process.env.VAPI_ASSISTANT_ID,
+                assistantOverrides: {
+                    metadata: {
+                        clinic_id: clinic_id
+                    }
                 }
             })
         });
 
         if (!response.ok) {
-            throw new Error(`Retell API error: ${response.statusText}`);
+            throw new Error(`Vapi API error: ${response.statusText}`);
         }
 
         const data = await response.json();

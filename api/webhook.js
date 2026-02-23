@@ -11,12 +11,12 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { event, call } = req.body;
+        const { message } = req.body;
 
-        if (event === 'call_analyzed') {
-            const clinic_id = call?.retell_llm_dynamic_variables?.clinic_id;
-            const patient_name = call?.call_analysis?.custom_analysis_data?.patient_name;
-            const date_time = call?.call_analysis?.custom_analysis_data?.date_time;
+        if (message?.type === 'end-of-call-report') {
+            const clinic_id = message.call?.metadata?.clinic_id;
+            const patient_name = message.analysis?.structuredData?.patient_name;
+            const date_time = message.analysis?.structuredData?.date_time;
 
             if (clinic_id && patient_name && date_time) {
                 const { error } = await supabaseAdmin
