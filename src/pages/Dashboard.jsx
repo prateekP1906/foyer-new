@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Phone, Calendar, CheckCircle, AlertCircle, DollarSign, Users, Briefcase, Edit, X, Trash2, Plus, User, Clock } from 'lucide-react';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
-
+import TestWebCallButton from '../components/TestWebCallButton';
 
 const Dashboard = () => {
     const [appointments, setAppointments] = useState([]);
@@ -188,6 +188,7 @@ const Dashboard = () => {
                     </p>
                 </div>
                 <div className="flex items-center gap-4">
+                    {user && <TestWebCallButton user={user} />}
                     <button
                         onClick={() => setIsAddingAppointment(true)}
                         className="bg-dental-teal text-white px-5 py-2.5 rounded-xl hover:bg-teal-600 transition-all cursor-pointer flex items-center gap-2 font-bold shadow-lg shadow-dental-teal/20 hover:shadow-dental-teal/40 hover:-translate-y-0.5"
