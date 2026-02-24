@@ -66,7 +66,7 @@ const Dashboard = () => {
             const { data, error } = await supabase
                 .from('appointments')
                 .select('*')
-                .eq('clinic_id', authUser.id)
+                .eq('user_id', authUser.id)
                 .order('appointment_time', { ascending: true });
 
             if (data) {

@@ -14,19 +14,31 @@ export default async function handler(req, res) {
         const { message } = req.body;
 
         if (message?.type === 'end-of-call-report') {
-            const clinic_id = message.call?.metadata?.clinic_id;
-            const patient_name = message.analysis?.structuredData?.patient_name;
-            const date_time = message.analysis?.structuredData?.date_time;
+            try {
+                const user_id = message.call?.metadata?.user_id;
+                const patient_name = message.analysis?.structuredData?.patient_name;
+                const appointment_time = message.analysis?.structuredData?.date_time;
+                const issue_description = message.analysis?.structuredData?.issue;
 
-            if (clinic_id && patient_name && date_time) {
-                const { error } = await supabaseAdmin
-                    .from('appointments')
-                    .insert([{ clinic_id, patient_name, date_time }]);
+                if (user_id && patient_name && appointment_time) {
+                    const { error } = await supabaseAdmin
+                        .from('appointments')
+                        .insert([{
+                            user_id,
+                            patient_name,
+                            appointment_time,
+                            issue_description,
+                            status: 'confirmed'
+                        }]);
 
-                if (error) {
-                    console.error(error);
-                    return res.status(500).json({ error: error.message });
+                    if (error) {
+                        console.error(error);
+                        return res.status(500).json({ error: error.message });
+                    }
                 }
+            } catch (dbError) {
+                console.error(dbError);
+                return res.status(500).json({ error: dbError.message });
             }
         }
 
