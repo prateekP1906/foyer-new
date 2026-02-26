@@ -1,9 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseAdmin = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+const supabaseUrl = process.env.SUPABASE_URL || 'https://mziqagmbyfwhelsyuwhp.supabase.co';
+const supabaseKey = process.env.SUPABASE_KEY;
+
+const supabaseAdmin = createClient(supabaseUrl, supabaseKey);
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -16,35 +16,40 @@ export default async function handler(req, res) {
         if (message?.type === 'end-of-call-report') {
             try {
                 const user_id = message.call?.metadata?.user_id;
-                const patient_name = message.analysis?.structuredData?.patient_name;
-                const appointment_time = message.analysis?.structuredData?.date_time;
-                const issue_description = message.analysis?.structuredData?.issue;
+                const data = message.analysis?.structuredData;
 
-                if (user_id && patient_name && appointment_time) {
-                    const { error } = await supabaseAdmin
-                        .from('appointments')
-                        .insert([{
-                            user_id,
-                            patient_name,
-                            appointment_time,
-                            issue_description,
-                            status: 'confirmed'
-                        }]);
+                if (data) {
+                    const patient_name = data.patient_name || data['patient name'];
+                    const issue = data.issue || data.issue_description;
+                    const apptDate = data.appointment_date || data['appointment date'];
+                    const apptTime = data.appointment_time || data['appointment time'];
+
+                    const formattedDate = apptDate ? apptDate.replace(/\s/g, '-') : '';
+                    const appointment_time = formattedDate && apptTime ? `${formattedDate}T${apptTime}:00` : null;
+
+                    const insertData = {
+                        patient_name,
+                        issue_description: issue,
+                        appointment_time,
+                        phone_number: data.phone_number || 'Not provided',
+                        status: 'confirmed'
+                    };
+
+                    if (user_id) insertData.user_id = user_id;
+
+                    const { error } = await supabaseAdmin.from('appointments').insert([insertData]);
 
                     if (error) {
-                        console.error(error);
                         return res.status(500).json({ error: error.message });
                     }
                 }
             } catch (dbError) {
-                console.error(dbError);
                 return res.status(500).json({ error: dbError.message });
             }
         }
 
         res.status(200).json({ received: true });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ error: error.message });
     }
 }
