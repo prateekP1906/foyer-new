@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
+const supabaseUrl = process.env.VITE_SUPABASE_URL;
+const supabaseKey = process.env.VITE_SUPABASE_KEY;
 const supabase = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supabaseKey) : null;
 
 export default async function handler(req, res) {
@@ -29,10 +29,10 @@ export default async function handler(req, res) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${process.env.VAPI_API_KEY}`
+                'Authorization': `Bearer ${process.env.VITE_VAPI_PUBLIC_KEY}`
             },
             body: JSON.stringify({
-                assistantId: process.env.VAPI_ASSISTANT_ID,
+                assistantId: process.env.VITE_VAPI_ASSISTANT_ID,
                 assistantOverrides: {
                     metadata: {
                         clinic_id: clinic_id
