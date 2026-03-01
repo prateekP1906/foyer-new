@@ -273,7 +273,7 @@ const Dashboard = () => {
                                         </a>
                                     </td>
                                     <td className="px-8 py-5 text-slate-500">
-                                        {apt.appointment_time ? format(new Date(apt.appointment_time), 'MMM d, h:mm a') : 'TBD'}
+                                        {apt.appointment_time ? format(new Date(apt.appointment_time), 'dd-MM-yyyy HH:mm') : 'TBD'}
                                     </td>
                                     <td className="px-8 py-5 text-slate-500 max-w-xs truncate">
                                         {apt.issue_description}
@@ -369,7 +369,7 @@ const Dashboard = () => {
                                     <input
                                         type="datetime-local"
                                         value={editingAppointment.appointment_time ? format(new Date(editingAppointment.appointment_time), "yyyy-MM-dd'T'HH:mm") : ''}
-                                        onChange={e => setEditingAppointment({ ...editingAppointment, appointment_time: new Date(e.target.value).toISOString() })}
+                                        onChange={e => setEditingAppointment({ ...editingAppointment, appointment_time: e.target.value ? new Date(e.target.value).toISOString() : '' })}
                                         className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-dental-teal/50 focus:border-dental-teal transition-all font-medium"
                                     />
                                 </div>
@@ -457,8 +457,8 @@ const Dashboard = () => {
                                     <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Date & Time</label>
                                     <input
                                         type="datetime-local"
-                                        value={newAppointment.appointment_time ? newAppointment.appointment_time.slice(0, 16) : ''}
-                                        onChange={e => setNewAppointment({ ...newAppointment, appointment_time: new Date(e.target.value).toISOString() })}
+                                        value={newAppointment.appointment_time ? format(new Date(newAppointment.appointment_time), "yyyy-MM-dd'T'HH:mm") : ''}
+                                        onChange={e => setNewAppointment({ ...newAppointment, appointment_time: e.target.value ? new Date(e.target.value).toISOString() : '' })}
                                         className="w-full p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-dental-teal/50 focus:border-dental-teal transition-all font-medium"
                                         required
                                     />
