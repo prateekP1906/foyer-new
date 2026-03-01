@@ -44,19 +44,25 @@ async function checkAvailability(args) {
     return { available: true };
 }
 
-async function bookAppointment(args) {
+async function bookAppointment(args, userId) {
     const { name, phone, issue, date, time } = args;
     const timestamp = `${date}T${time}:00`;
 
     if (!supabase) return { success: false, message: "Database connection failed" };
 
-    const { error: dbError } = await supabase.from('appointments').insert([{
+    const insertData = {
         patient_name: name,
         phone_number: phone,
         issue_description: issue || 'Not specified',
         appointment_time: timestamp,
         status: 'confirmed'
-    }]);
+    };
+
+    if (userId) {
+        insertData.user_id = userId;
+    }
+
+    const { error: dbError } = await supabase.from('appointments').insert([insertData]);
 
     if (dbError) {
         return { success: false, message: "Database error during booking." };
@@ -72,7 +78,8 @@ async function bookAppointment(args) {
             phone_number: phone,
             issue_description: issue,
             appointment_time: timestamp,
-            status: 'confirmed'
+            status: 'confirmed',
+            user_id: userId
         }
     });
 
@@ -101,6 +108,8 @@ export default async function handler(req, res) {
         const { message } = req.body;
 
         if (message && message.type === 'tool-calls') {
+            const userId = message.call?.metadata?.user_id;
+
             const toolCall = message.toolCalls[0];
             const functionName = toolCall.function.name;
             const rawArgs = toolCall.function.arguments;
@@ -110,7 +119,7 @@ export default async function handler(req, res) {
             if (functionName === 'checkAvailability') {
                 result = await checkAvailability(args);
             } else if (functionName === 'bookAppointment') {
-                result = await bookAppointment(args);
+                result = await bookAppointment(args, userId);
             } else {
                 result = { error: 'Unknown function' };
             }
