@@ -24,24 +24,8 @@ export default async function handler(req, res) {
                     const apptDate = data.appointment_date || data['appointment date'];
                     const apptTime = data.appointment_time || data['appointment time'];
 
-                    const formattedDate = apptDate ? apptDate.replace(/\s/g, '-') : '';
-                    const appointment_time = formattedDate && apptTime ? `${formattedDate}T${apptTime}:00` : null;
-
-                    const insertData = {
-                        patient_name,
-                        issue_description: issue,
-                        appointment_time,
-                        phone_number: data.phone_number || 'Not provided',
-                        status: 'confirmed'
-                    };
-
-                    if (user_id) insertData.user_id = user_id;
-
-                    const { error } = await supabaseAdmin.from('appointments').insert([insertData]);
-
-                    if (error) {
-                        return res.status(500).json({ error: error.message });
-                    }
+                    const formattedDate = (apptDate && typeof apptDate === 'string') ? apptDate.replace(/\s/g, '-') : '';
+                    const appointment_time = (formattedDate && typeof apptTime === 'string') ? `${formattedDate}T${apptTime}:00` : null;
                 }
             } catch (dbError) {
                 return res.status(500).json({ error: dbError.message });

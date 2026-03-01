@@ -57,6 +57,19 @@ async function bookAppointment(args) {
 
     if (!supabase) return { success: false, message: "Database connection failed" };
 
+    const { error: dbError } = await supabase.from('appointments').insert([{
+        patient_name: name,
+        phone_number: phone,
+        issue_description: issue,
+        appointment_time: timestamp,
+        status: 'confirmed'
+    }]);
+
+    if (dbError) {
+        console.error('Database insertion error:', dbError);
+        return { success: false, message: "Database error during booking." };
+    }
+
     // Broadcast to the 'demo-room' channel for real-time UI updates
     const channel = supabase.channel('demo-room');
     await channel.send({
@@ -101,7 +114,8 @@ export default async function handler(req, res) {
         if (message && message.type === 'tool-calls') {
             const toolCall = message.toolCalls[0];
             const functionName = toolCall.function.name;
-            const args = JSON.parse(toolCall.function.arguments);
+            const rawArgs = toolCall.function.arguments;
+            const args = typeof rawArgs === 'string' ? JSON.parse(rawArgs) : (rawArgs || {});
             let result;
 
             if (functionName === 'checkAvailability') {
