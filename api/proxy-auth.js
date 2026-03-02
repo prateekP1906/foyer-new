@@ -56,6 +56,51 @@ export default async function handler(req, res) {
             });
             if (error) throw error;
             return res.status(200).json(data);
+        } else if (action === 'getUserData') {
+            const { userId } = req.body;
+            if (!userId) throw new Error('userId is required');
+
+            const { data: profileData, error: profileError } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', userId)
+                .single();
+
+            const { data: apptData, error: apptError } = await supabase
+                .from('appointments')
+                .select('*')
+                .eq('user_id', userId)
+                .order('appointment_time', { ascending: true });
+
+            return res.status(200).json({
+                profile: profileData || null,
+                appointments: apptData || [],
+                profileError: profileError?.message,
+                apptError: apptError?.message
+            });
+        } else if (action === 'addAppointment') {
+            const { appointment } = req.body;
+            const { data, error } = await supabase
+                .from('appointments')
+                .insert(appointment);
+            if (error) throw error;
+            return res.status(200).json({ success: true, data });
+        } else if (action === 'deleteAppointment') {
+            const { id } = req.body;
+            const { error } = await supabase
+                .from('appointments')
+                .delete()
+                .eq('id', id);
+            if (error) throw error;
+            return res.status(200).json({ success: true });
+        } else if (action === 'updateAppointment') {
+            const { id, updates } = req.body;
+            const { data, error } = await supabase
+                .from('appointments')
+                .update(updates)
+                .eq('id', id);
+            if (error) throw error;
+            return res.status(200).json({ success: true, data });
         } else {
             return res.status(400).json({ error: 'Invalid action' });
         }

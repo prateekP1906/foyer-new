@@ -28,94 +28,110 @@ const Dashboard = () => {
     });
     const navigate = useNavigate();
 
-    useEffect(() => {
-        fetchData();
-        fetchUser();
-    }, []);
+    const fetchDataAndUser = async () => {
+        setLoading(true);
+        const { data: { session } } = await supabase.auth.getSession();
 
-    const fetchUser = async () => {
-        const { data: { user } } = await supabase.auth.getUser();
-        if (user) {
-            const { data, error } = await supabase
-                .from('profiles')
-                .select('*')
-                .eq('id', user.id)
-                .single();
+        if (session && session.user) {
+            const authUser = session.user;
+            let profileData = null;
+            let apptData = [];
 
-            if (data) {
+            try {
+                const response = await fetch('/api/proxy-auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'getUserData', userId: authUser.id })
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    profileData = result.profile;
+                    apptData = result.appointments || [];
+                }
+            } catch (err) {
+                console.error("Proxy fetch failed:", err);
+            }
+
+            if (profileData) {
                 setUser({
-                    ...user,
+                    ...authUser,
                     user_metadata: {
-                        ...user.user_metadata,
-                        first_name: data.first_name,
-                        last_name: data.last_name,
-                        avatar_url: data.avatar_url
+                        ...authUser.user_metadata,
+                        first_name: profileData.first_name,
+                        last_name: profileData.last_name,
+                        avatar_url: profileData.avatar_url
                     }
                 });
             } else {
-                setUser(user);
+                setUser(authUser);
             }
-        }
-    };
 
-    const fetchData = async () => {
-        setLoading(true);
-        const { data: { user: authUser } } = await supabase.auth.getUser();
-
-        if (authUser) {
-            const { data, error } = await supabase
-                .from('appointments')
-                .select('*')
-                .eq('user_id', authUser.id)
-                .order('appointment_time', { ascending: true });
-
-            if (data) {
-                setAppointments(data);
-                calculateStats(data);
-            }
+            setAppointments(apptData);
+            calculateStats(apptData);
         }
         setLoading(false);
     };
+
+    useEffect(() => {
+        fetchDataAndUser();
+    }, []);
 
     const handleAddAppointment = async (e) => {
         e.preventDefault();
         if (!user) return;
 
-        const { error } = await supabase
-            .from('appointments')
-            .insert({
-                ...newAppointment,
-                appointment_time: newAppointment.appointment_time || new Date().toISOString(),
-                user_id: user.id
+        try {
+            const response = await fetch('/api/proxy-auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'addAppointment',
+                    appointment: {
+                        ...newAppointment,
+                        appointment_time: newAppointment.appointment_time || new Date().toISOString(),
+                        user_id: user.id
+                    }
+                })
             });
 
-        if (!error) {
-            setIsAddingAppointment(false);
-            setNewAppointment({
-                patient_name: '',
-                phone_number: '',
-                appointment_time: '',
-                issue_description: '',
-                status: 'pending'
-            });
-            fetchData();
-        } else {
-            alert('Error adding appointment: ' + error.message);
+            if (response.ok) {
+                setIsAddingAppointment(false);
+                setNewAppointment({
+                    patient_name: '',
+                    phone_number: '',
+                    appointment_time: '',
+                    issue_description: '',
+                    status: 'pending'
+                });
+                fetchDataAndUser();
+            } else {
+                const res = await response.json();
+                alert('Error adding appointment: ' + res.error);
+            }
+        } catch (err) {
+            alert('Error adding appointment: ' + err.message);
         }
     };
 
     const handleDeleteAppointment = async (id) => {
         if (!window.confirm('Are you sure you want to delete this appointment?')) return;
 
-        const { error } = await supabase
-            .from('appointments')
-            .delete()
-            .eq('id', id);
+        try {
+            const response = await fetch('/api/proxy-auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'deleteAppointment', id })
+            });
 
-        if (!error) {
-            fetchData();
-        } else {
-            alert('Error deleting appointment: ' + error.message);
+            if (response.ok) {
+                fetchDataAndUser();
+            } else {
+                const res = await response.json();
+                alert('Error deleting appointment: ' + res.error);
+            }
+        } catch (err) {
+            alert('Error deleting appointment: ' + err.message);
         }
     };
 
@@ -123,22 +139,32 @@ const Dashboard = () => {
         e.preventDefault();
         if (!editingAppointment) return;
 
-        const { error } = await supabase
-            .from('appointments')
-            .update({
-                patient_name: editingAppointment.patient_name,
-                phone_number: editingAppointment.phone_number,
-                appointment_time: editingAppointment.appointment_time,
-                issue_description: editingAppointment.issue_description,
-                status: editingAppointment.status
-            })
-            .eq('id', editingAppointment.id);
+        try {
+            const response = await fetch('/api/proxy-auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'updateAppointment',
+                    id: editingAppointment.id,
+                    updates: {
+                        patient_name: editingAppointment.patient_name,
+                        phone_number: editingAppointment.phone_number,
+                        appointment_time: editingAppointment.appointment_time,
+                        issue_description: editingAppointment.issue_description,
+                        status: editingAppointment.status
+                    }
+                })
+            });
 
-        if (!error) {
-            setEditingAppointment(null);
-            fetchData();
-        } else {
-            alert('Error updating appointment: ' + error.message);
+            if (response.ok) {
+                setEditingAppointment(null);
+                fetchDataAndUser();
+            } else {
+                const res = await response.json();
+                alert('Error updating appointment: ' + res.error);
+            }
+        } catch (err) {
+            alert('Error updating appointment: ' + err.message);
         }
     };
 
