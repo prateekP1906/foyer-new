@@ -17,16 +17,30 @@ const Login = () => {
         setLoading(true);
         setError(null);
 
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
+        try {
+            const response = await fetch('/api/proxy-auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'signInWithPassword', email, password })
+            });
 
-        if (error) {
-            setError(error.message);
-        } else {
-            navigate('/dashboard');
+            const result = await response.json();
+
+            if (!response.ok || result.error) {
+                setError(result.error || 'Failed to sign in');
+            } else {
+                if (result.data?.session) {
+                    await supabase.auth.setSession({
+                        access_token: result.data.session.access_token,
+                        refresh_token: result.data.session.refresh_token
+                    });
+                }
+                navigate('/dashboard');
+            }
+        } catch (err) {
+            setError(err.message);
         }
+
         setLoading(false);
     };
 

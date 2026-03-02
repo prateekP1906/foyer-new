@@ -20,22 +20,30 @@ const Signup = () => {
         setLoading(true);
         setError(null);
 
-        const { error } = await supabase.auth.signUp({
-            email,
-            password,
-            options: {
-                data: {
-                    first_name: firstName,
-                    last_name: lastName
-                }
-            }
-        });
+        try {
+            const response = await fetch('/api/proxy-auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action: 'signUp',
+                    email,
+                    password,
+                    firstName,
+                    lastName
+                })
+            });
 
-        if (error) {
-            setError(error.message);
-        } else {
-            setSuccess(true);
+            const result = await response.json();
+
+            if (!response.ok || result.error) {
+                setError(result.error || 'Failed to register');
+            } else {
+                setSuccess(true);
+            }
+        } catch (err) {
+            setError(err.message);
         }
+
         setLoading(false);
     };
 
