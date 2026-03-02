@@ -21,7 +21,7 @@ const Login = () => {
             const response = await fetch('/api/proxy-auth', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ action: 'signInWithPassword', email, password })
+                body: JSON.stringify({ action: 'login', email, password })
             });
 
             const result = await response.json();
@@ -29,10 +29,10 @@ const Login = () => {
             if (!response.ok || result.error) {
                 setError(result.error || 'Failed to sign in');
             } else {
-                if (result.data?.session) {
+                if (result.session) {
                     await supabase.auth.setSession({
-                        access_token: result.data.session.access_token,
-                        refresh_token: result.data.session.refresh_token
+                        access_token: result.session.access_token,
+                        refresh_token: result.session.refresh_token
                     });
                 }
                 navigate('/dashboard');
