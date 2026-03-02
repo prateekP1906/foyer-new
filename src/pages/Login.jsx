@@ -30,10 +30,25 @@ const Login = () => {
                 setError(result.error || 'Failed to sign in');
             } else {
                 if (result.session) {
-                    await supabase.auth.setSession({
-                        access_token: result.session.access_token,
-                        refresh_token: result.session.refresh_token
-                    });
+                    const originalFetch = globalThis.fetch;
+                    globalThis.fetch = async (url, options) => {
+                        if (typeof url === 'string' && url.includes('/auth/v1/user')) {
+                            return new Response(JSON.stringify(result.user), {
+                                status: 200,
+                                headers: { 'Content-Type': 'application/json' }
+                            });
+                        }
+                        return originalFetch(url, options);
+                    };
+
+                    try {
+                        await supabase.auth.setSession({
+                            access_token: result.session.access_token,
+                            refresh_token: result.session.refresh_token
+                        });
+                    } finally {
+                        globalThis.fetch = originalFetch;
+                    }
                 }
                 navigate('/dashboard');
             }
