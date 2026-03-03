@@ -49,7 +49,7 @@ async function checkAvailability(args) {
     return { available: true };
 }
 
-async function bookAppointment(args) {
+async function bookAppointment(args, userId) {
     const { name, phone, date, time } = args;
 
     // Robustly extract the issue/reason from various potential keys
@@ -73,9 +73,29 @@ async function bookAppointment(args) {
             phone_number: phone,
             issue_description: issueDesc,
             appointment_time: timestamp,
-            status: 'confirmed'
+            status: 'confirmed',
+            user_id: userId
         }
     });
+
+    const insertData = {
+        patient_name: name,
+        phone_number: phone || null,
+        issue_description: issueDesc,
+        appointment_time: timestamp,
+        status: 'confirmed'
+    };
+
+    if (userId) {
+        insertData.user_id = userId;
+    }
+
+    const { error: dbError } = await supabase.from('appointments').insert([insertData]);
+
+    if (dbError) {
+        console.error('Database error during insert:', dbError);
+        return { success: false, message: "Database error during booking." };
+    }
 
     return { success: true, message: `Booked for ${time}` };
 }
@@ -102,13 +122,21 @@ export default async function handler(req, res) {
     console.log('Received Retell Request:', JSON.stringify(req.body, null, 2));
 
     try {
-        const { args, name } = req.body;
+        const { args, name, call } = req.body;
+
+        let userId = null;
+        if (call) {
+            userId = call.metadata?.user_id ||
+                call.retell_llm_dynamic_variables?.user_id ||
+                call.user_id;
+        }
+
         let result;
 
         if (name === 'checkAvailability') {
             result = await checkAvailability(args);
         } else if (name === 'bookAppointment') {
-            result = await bookAppointment(args);
+            result = await bookAppointment(args, userId);
         } else {
             result = { error: 'Unknown function' };
         }

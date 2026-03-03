@@ -44,7 +44,7 @@ async function checkAvailability(args) {
     return { available: true };
 }
 
-async function bookAppointment(args, userId) {
+async function bookAppointment(args, user_id) {
     const { name, phone, issue, date, time } = args;
     const timestamp = `${date}T${time}:00`;
 
@@ -58,8 +58,8 @@ async function bookAppointment(args, userId) {
         status: 'confirmed'
     };
 
-    if (userId) {
-        insertData.user_id = userId;
+    if (user_id) {
+        insertData.user_id = user_id;
     }
 
     const { error: dbError } = await supabase.from('appointments').insert([insertData]);
@@ -79,7 +79,7 @@ async function bookAppointment(args, userId) {
             issue_description: issue,
             appointment_time: timestamp,
             status: 'confirmed',
-            user_id: userId
+            user_id: user_id
         }
     });
 
@@ -108,18 +108,29 @@ export default async function handler(req, res) {
         const { message } = req.body;
 
         if (message && message.type === 'tool-calls') {
-            const userId = message.call?.metadata?.user_id;
+            const call = message.call || {};
+            let user_id = call.metadata?.user_id ||
+                call.customer?.metadata?.user_id ||
+                call.assistantOverrides?.metadata?.user_id ||
+                call.assistantOverrides?.variableValues?.user_id ||
+                call.assistant?.metadata?.user_id ||
+                message.customer?.metadata?.user_id;
 
             const toolCall = message.toolCalls[0];
             const functionName = toolCall.function.name;
             const rawArgs = toolCall.function.arguments;
             const args = typeof rawArgs === 'string' ? JSON.parse(rawArgs) : (rawArgs || {});
+
+            // If the AI tool passed user_id inside args, prefer it
+            if (args.user_id) user_id = args.user_id;
+            if (args.userId) user_id = args.userId;
+
             let result;
 
             if (functionName === 'checkAvailability') {
                 result = await checkAvailability(args);
             } else if (functionName === 'bookAppointment') {
-                result = await bookAppointment(args, userId);
+                result = await bookAppointment(args, user_id);
             } else {
                 result = { error: 'Unknown function' };
             }

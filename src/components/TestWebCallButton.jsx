@@ -32,6 +32,9 @@ export default function TestWebCallButton({ user }) {
             await vapi.start(import.meta.env.VITE_VAPI_ASSISTANT_ID, {
                 metadata: {
                     user_id: user?.id
+                },
+                variableValues: {
+                    user_id: user?.id
                 }
             });
         } catch (error) {

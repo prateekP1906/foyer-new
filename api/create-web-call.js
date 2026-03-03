@@ -36,6 +36,14 @@ export default async function handler(req, res) {
                 assistantOverrides: {
                     metadata: {
                         user_id: user_id
+                    },
+                    variableValues: {
+                        user_id: user_id
+                    }
+                },
+                customer: {
+                    metadata: {
+                        user_id: user_id
                     }
                 }
             })
