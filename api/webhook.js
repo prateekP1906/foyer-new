@@ -24,7 +24,7 @@ async function checkAvailability(args) {
         return { available: false, reason: "Outside of business hours (09:00 - 17:00)" };
     }
 
-    const timestamp = `${requested_date}T${requested_time}:00`;
+    const timestamp = `${requested_date}T${requested_time}:00+05:30`;
 
     if (!supabase) return { available: false, reason: "Database connection failed" };
 
@@ -46,7 +46,7 @@ async function checkAvailability(args) {
 
 async function bookAppointment(args, user_id) {
     const { name, phone, issue, date, time } = args;
-    const timestamp = `${date}T${time}:00`;
+    const timestamp = `${date}T${time}:00+05:30`;
 
     if (!supabase) return { success: false, message: "Database connection failed" };
 

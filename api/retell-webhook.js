@@ -28,7 +28,7 @@ async function checkAvailability(args) {
     }
 
     // 2. Check DB
-    const timestamp = `${requested_date}T${requested_time}:00`;
+    const timestamp = `${requested_date}T${requested_time}:00+05:30`;
 
     if (!supabase) return { available: false, reason: "Database connection failed" };
 
@@ -55,7 +55,7 @@ async function bookAppointment(args, userId) {
     // Robustly extract the issue/reason from various potential keys
     const issueDesc = args.issue || args.reason || args.description || args.notes || args.query || "General Consultation";
 
-    const timestamp = `${date}T${time}:00`;
+    const timestamp = `${date}T${time}:00+05:30`;
 
     console.log('Booking requested:', args);
     console.log('Extracted issue description:', issueDesc);
