@@ -405,15 +405,91 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </>
+                ) : activeTab === 'patients' ? (
+                    <div className="bg-white rounded-3xl border border-slate-100/60 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] overflow-hidden mt-8">
+                        <div className="p-6 border-b border-slate-100/60 bg-slate-50/50">
+                            <h2 className="text-[17px] font-bold text-slate-900">Patient Directory</h2>
+                            <p className="text-[13px] text-slate-500 mt-1">A consolidated list of all unique patients.</p>
+                        </div>
+                        {appointments.length === 0 ? (
+                            <div className="p-12 text-center text-slate-400 font-medium">No patients found.</div>
+                        ) : (
+                            <div className="flex flex-col">
+                                {Array.from(new Map(appointments.filter(a => a.patient_name).map(apt => [apt.patient_name, apt])).values()).map(apt => (
+                                    <div key={apt.id} className="px-6 py-4 flex items-center gap-4 border-b border-slate-50 last:border-b-0 hover:bg-slate-50/50 transition-colors">
+                                        <div className="w-11 h-11 rounded-full bg-dental-teal/10 flex items-center justify-center text-[13px] font-black text-dental-teal uppercase flex-shrink-0">
+                                            {apt.patient_name ? (apt.patient_name.includes(' ') ? apt.patient_name.split(' ')[0][0] + (apt.patient_name.split(' ')[1]?.[0] || '') : apt.patient_name.slice(0, 2)) : '?'}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="text-[14px] font-bold text-slate-900">{apt.patient_name}</div>
+                                            <div className="text-[12px] font-medium text-slate-500 mt-0.5 flex flex-col sm:flex-row sm:gap-4 sm:items-center">
+                                                <span className="flex items-center gap-1.5"><Phone className="w-3.5 h-3.5" /> {apt.phone_number || 'N/A'}</span>
+                                                <span className="hidden sm:inline text-slate-300">•</span>
+                                                <span>Last booked: {formatDistanceToNow(new Date(apt.appointment_time), { addSuffix: true })}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                ) : activeTab === 'appointments' ? (
+                    <div className="bg-white rounded-3xl border border-slate-100/60 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] overflow-hidden mt-8">
+                        <div className="p-6 border-b border-slate-100/60 bg-slate-50/50 flex justify-between items-center">
+                            <div>
+                                <h2 className="text-[17px] font-bold text-slate-900">All Appointments</h2>
+                                <p className="text-[13px] text-slate-500 mt-1">Complete history of bookings and calls.</p>
+                            </div>
+                            <button onClick={() => setIsAddingAppointment(true)} className="flex items-center gap-2 bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-bold hover:bg-slate-800 transition-colors">
+                                <Calendar className="w-4 h-4" /> Schedule manually
+                            </button>
+                        </div>
+                        {appointments.length === 0 ? (
+                            <div className="p-12 text-center text-slate-400 font-medium">No appointments found.</div>
+                        ) : (
+                            <div className="flex flex-col">
+                                {appointments.sort((a, b) => new Date(b.appointment_time) - new Date(a.appointment_time)).map(apt => (
+                                    <div key={apt.id} className="px-6 py-4 flex items-center gap-4 border-b border-slate-50 last:border-b-0 hover:bg-slate-50/50 transition-colors group">
+                                        <div className="w-16 flex-shrink-0 text-center">
+                                            <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{format(new Date(apt.appointment_time), 'MMM d')}</div>
+                                            <div className="text-[15px] font-black text-slate-900">{format(new Date(apt.appointment_time), 'h:mm a')}</div>
+                                        </div>
+                                        <div className="w-px h-10 bg-slate-100 hidden sm:block"></div>
+                                        <div className="flex-1 min-w-0 sm:pl-2">
+                                            <div className="text-[14px] font-bold text-slate-900 flex items-center gap-2">
+                                                {apt.patient_name || 'Unknown'}
+                                                {apt.status === 'confirmed' ? (
+                                                    <span className="bg-emerald-50 text-emerald-500 text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md">BOOKED</span>
+                                                ) : apt.status === 'pending' ? (
+                                                    <span className="bg-amber-50 text-amber-500 text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md">PENDING</span>
+                                                ) : apt.status === 'cancelled' ? (
+                                                    <span className="bg-slate-100 text-slate-400 text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md">CANCELLED</span>
+                                                ) : (
+                                                    <span className="bg-blue-50 text-blue-500 text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md">GENERAL</span>
+                                                )}
+                                            </div>
+                                            <div className="text-[12px] font-medium text-slate-500 mt-1 truncate max-w-md">{apt.issue_description || 'General inquiry'}</div>
+                                        </div>
+                                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <button onClick={() => setEditingAppointment(apt)} className="p-2 rounded-xl text-slate-400 hover:text-dental-teal hover:bg-dental-mint/50 cursor-pointer transition-colors">
+                                                <Edit className="w-4 h-4" />
+                                            </button>
+                                            <button onClick={() => handleDeleteAppointment(apt.id)} className="p-2 rounded-xl text-slate-400 hover:text-red-500 hover:bg-red-50 cursor-pointer transition-colors">
+                                                <Trash2 className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 ) : (
-                    <div className="flex flex-col items-center justify-center h-[500px] border-2 border-dashed border-slate-200 rounded-3xl bg-white/50">
+                    <div className="flex flex-col items-center justify-center h-[500px] border-2 border-dashed border-slate-200 rounded-3xl bg-white/50 mt-8">
                         <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mb-4">
                             {activeTab === 'calls' && <Phone className="w-8 h-8 text-slate-400" />}
-                            {activeTab === 'patients' && <Users className="w-8 h-8 text-slate-400" />}
-                            {activeTab === 'appointments' && <Calendar className="w-8 h-8 text-slate-400" />}
                             {activeTab === 'settings' && <Settings className="w-8 h-8 text-slate-400" />}
                         </div>
-                        <h2 className="text-xl font-bold text-slate-900 capitalize">{activeTab === 'patients' ? 'Patient Directory' : activeTab === 'calls' ? 'Call Logs' : activeTab}</h2>
+                        <h2 className="text-xl font-bold text-slate-900 capitalize">{activeTab === 'calls' ? 'Call Logs' : activeTab}</h2>
                         <p className="text-slate-400 mt-2">This module is currently under construction.</p>
                     </div>
                 )}
