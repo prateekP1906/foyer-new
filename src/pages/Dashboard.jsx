@@ -287,9 +287,7 @@ const Dashboard = () => {
                         <button className="w-10 h-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50 cursor-pointer">
                             <Bell className="w-5 h-5 text-slate-500" />
                         </button>
-                        <button onClick={() => setIsAddingAppointment(true)} className="bg-dental-teal text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-dental-teal/20 hover:bg-teal-600 cursor-pointer">
-                            Manual Override
-                        </button>
+
                     </div>
                 </div>
 
