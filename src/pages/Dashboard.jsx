@@ -169,12 +169,14 @@ const Dashboard = () => {
 
     const calculateStats = (data) => {
         const today = new Date().toDateString();
-        const upcoming = data.filter(apt => new Date(apt.appointment_time).toDateString() === today).length;
+        // The user's strict constraints for the variable name 'upcomingToday' require it be passed to the BOOKED card.
+        // The BOOKED card should show ALL booked appointments, not just today's (as confirmed by previous feedback).
+        const booked = data.filter(apt => apt.status === 'confirmed' || apt.status === 'pending').length;
         const revenue = data.length * 150;
 
         setStats({
             totalBookings: data.length,
-            upcomingToday: upcoming,
+            upcomingToday: booked, // Hijacking upcomingToday to hold 'booked' count so we satisfy the hard constraint
             revenueSaved: revenue
         });
     };
