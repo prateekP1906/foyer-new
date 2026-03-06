@@ -328,7 +328,7 @@ const Dashboard = () => {
                             <div className="col-span-3">
                                 <div className="flex justify-between items-center mb-4">
                                     <h2 className="text-lg font-bold text-slate-900">Recent AI Calls</h2>
-                                    <span className="text-sm font-semibold text-dental-teal hover:text-teal-700 cursor-pointer">View all</span>
+                                    <span onClick={() => setActiveTab('calls')} className="text-sm font-semibold text-dental-teal hover:text-teal-700 cursor-pointer">View all</span>
                                 </div>
                                 <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
                                     {appointments.length === 0 ? (
