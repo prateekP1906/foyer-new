@@ -345,6 +345,8 @@ const Dashboard = () => {
                                                 </div>
                                                 {apt.status === 'confirmed' ? (
                                                     <span className="bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">BOOKED</span>
+                                                ) : apt.status === 'completed' ? (
+                                                    <span className="bg-indigo-50 text-indigo-700 border border-indigo-200 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">COMPLETED</span>
                                                 ) : apt.status === 'pending' ? (
                                                     <span className="bg-amber-50 text-amber-700 border border-amber-200 text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">PENDING</span>
                                                 ) : apt.status === 'cancelled' ? (
@@ -413,7 +415,7 @@ const Dashboard = () => {
                             <div className="p-12 text-center text-slate-400 font-medium">No patients found.</div>
                         ) : (
                             <div className="flex flex-col">
-                                {Array.from(new Map(appointments.filter(a => a.patient_name).map(apt => [apt.patient_name, apt])).values()).map(apt => (
+                                {Array.from(new Map(appointments.filter(a => a.patient_name && a.status === 'completed').map(apt => [apt.patient_name, apt])).values()).map(apt => (
                                     <div key={apt.id} className="px-6 py-4 flex items-center gap-4 border-b border-slate-50 last:border-b-0 hover:bg-slate-50/50 transition-colors">
                                         <div className="w-11 h-11 rounded-full bg-dental-teal/10 flex items-center justify-center text-[13px] font-black text-dental-teal uppercase flex-shrink-0">
                                             {apt.patient_name ? (apt.patient_name.includes(' ') ? apt.patient_name.split(' ')[0][0] + (apt.patient_name.split(' ')[1]?.[0] || '') : apt.patient_name.slice(0, 2)) : '?'}
@@ -458,6 +460,8 @@ const Dashboard = () => {
                                                 {apt.patient_name || 'Unknown'}
                                                 {apt.status === 'confirmed' ? (
                                                     <span className="bg-emerald-50 text-emerald-500 text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md">BOOKED</span>
+                                                ) : apt.status === 'completed' ? (
+                                                    <span className="bg-indigo-50 text-indigo-500 text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md">COMPLETED</span>
                                                 ) : apt.status === 'pending' ? (
                                                     <span className="bg-amber-50 text-amber-500 text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md">PENDING</span>
                                                 ) : apt.status === 'cancelled' ? (
@@ -554,6 +558,7 @@ const Dashboard = () => {
                                 >
                                     <option value="pending">Pending</option>
                                     <option value="confirmed">Confirmed</option>
+                                    <option value="completed">Completed</option>
                                     <option value="cancelled">Cancelled</option>
                                 </select>
                             </div>
@@ -642,6 +647,7 @@ const Dashboard = () => {
                                 >
                                     <option value="pending">Pending</option>
                                     <option value="confirmed">Confirmed</option>
+                                    <option value="completed">Completed</option>
                                     <option value="cancelled">Cancelled</option>
                                 </select>
                             </div>
