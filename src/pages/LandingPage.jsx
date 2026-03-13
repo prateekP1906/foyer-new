@@ -5,7 +5,7 @@ import {
     Phone, Calendar, AlertTriangle, Shield, CheckCircle2,
     ArrowRight, Play, Server, Clock, Activity, Star,
     TrendingUp, Users, Lock, ChevronRight, Menu, X,
-    PhoneCall, Building2, Stethoscope, Briefcase
+    PhoneCall, Building2, Stethoscope, Briefcase, Check
 } from 'lucide-react';
 import clsx from 'clsx';
 
