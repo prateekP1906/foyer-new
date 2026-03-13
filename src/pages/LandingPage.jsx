@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Shield, Clock, Star, ArrowRight } from 'lucide-react';
 import clsx from 'clsx';
-import { ContainerScroll } from '../components/ui/container-scroll-animation';
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -65,129 +64,132 @@ const LandingPage = () => {
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:24px_24px] opacity-20" />
                 </div>
 
-                <div className="w-full relative z-10" style={{ transform: 'translateZ(0)' }}>
-                    <ContainerScroll
-                        titleComponent={
-                            <div className="flex flex-col items-center justify-center text-center px-4 max-w-5xl mx-auto mb-12">
-                                <motion.div
-                                    layout={false}
-                                    layoutScroll={false}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.6, delay: 0 }}
-                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 border border-slate-700 shadow-sm mb-8"
-                                >
-                                    <motion.span
-                                        layout={false}
-                                        layoutScroll={false}
-                                        animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-                                        transition={{ repeat: Infinity, duration: 1.5 }}
-                                        className="w-1.5 h-1.5 rounded-full bg-dental-teal"
-                                    />
-                                    <span className="text-xs font-bold uppercase tracking-wider text-slate-300">New: AI Voice Analysis</span>
-                                </motion.div>
+                <div className="w-full relative z-10 max-w-6xl mx-auto px-6" style={{ transform: 'translateZ(0)' }}>
+                    <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto mb-16">
+                        <motion.div
+                            layout={false}
+                            layoutScroll={false}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0 }}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 border border-slate-700 shadow-sm mb-8"
+                        >
+                            <motion.span
+                                layout={false}
+                                layoutScroll={false}
+                                animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+                                transition={{ repeat: Infinity, duration: 1.5 }}
+                                className="w-1.5 h-1.5 rounded-full bg-dental-teal"
+                            />
+                            <span className="text-xs font-bold uppercase tracking-wider text-slate-300">New: AI Voice Analysis</span>
+                        </motion.div>
 
-                                <div className="space-y-2 mb-8">
-                                    <motion.h1
-                                        layout={false}
-                                        layoutScroll={false}
-                                        initial={{ opacity: 0, y: 30 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.6, delay: 0.15 }}
-                                        className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[1.05]"
-                                    >
-                                        Your Front Desk,
-                                    </motion.h1>
-                                    <motion.h1
-                                        layout={false}
-                                        layoutScroll={false}
-                                        initial={{ opacity: 0, y: 30 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.6, delay: 0.3 }}
-                                        className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.05] bg-clip-text text-transparent bg-gradient-to-r from-dental-teal via-teal-300 to-cyan-300"
-                                    >
-                                        Reimagined.
-                                    </motion.h1>
-                                </div>
+                        <div className="space-y-4 mb-8">
+                            <motion.h1
+                                layout={false}
+                                layoutScroll={false}
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.15 }}
+                                className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[1.05]"
+                            >
+                                Your Front Desk,
+                            </motion.h1>
+                            <motion.h1
+                                layout={false}
+                                layoutScroll={false}
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.3 }}
+                                className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-[1.05] bg-clip-text text-transparent bg-gradient-to-r from-dental-teal via-teal-300 to-cyan-300"
+                            >
+                                Reimagined.
+                            </motion.h1>
+                        </div>
 
-                                <motion.p
-                                    layout={false}
-                                    layoutScroll={false}
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 0.6, delay: 0.45 }}
-                                    className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10"
-                                >
-                                    Our AI handles calls, bookings, and inquiries with human-level AI, so you can focus on patient care.
-                                </motion.p>
+                        <motion.p
+                            layout={false}
+                            layoutScroll={false}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.6, delay: 0.45 }}
+                            className="text-lg md:text-2xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10"
+                        >
+                            Our AI handles calls, bookings, and inquiries with human-level AI, so you can focus on patient care.
+                        </motion.p>
 
-                                <motion.div
-                                    layout={false}
-                                    layoutScroll={false}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.6, delay: 0.6 }}
-                                    className="flex flex-col sm:flex-row items-center justify-center gap-4"
-                                >
-                                    <button onClick={() => navigate('/demo')} className="w-full sm:w-auto bg-gradient-to-r from-dental-teal to-teal-400 text-white font-bold px-8 py-4 rounded-full shadow-xl shadow-dental-teal/30 hover:shadow-dental-teal/50 transition-shadow flex items-center justify-center gap-2 group">
-                                        Try Live Demo <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                    </button>
-                                    <button onClick={() => navigate('/signup')} className="w-full sm:w-auto bg-slate-800 text-white border border-slate-700 font-bold px-8 py-4 rounded-full shadow-sm hover:bg-slate-700 transition-colors">
-                                        Start for Free
-                                    </button>
-                                </motion.div>
-                            </div>
-                        }
+                        <motion.div
+                            layout={false}
+                            layoutScroll={false}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.6 }}
+                            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+                        >
+                            <button onClick={() => navigate('/demo')} className="w-full sm:w-auto bg-gradient-to-r from-dental-teal to-teal-400 text-white font-bold px-8 py-4 rounded-full shadow-xl shadow-dental-teal/30 hover:shadow-dental-teal/50 transition-shadow flex items-center justify-center gap-2 group">
+                                Try Live Demo <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                            </button>
+                            <button onClick={() => navigate('/signup')} className="w-full sm:w-auto bg-slate-800 text-white border border-slate-700 font-bold px-8 py-4 rounded-full shadow-sm hover:bg-slate-700 transition-colors">
+                                Start for Free
+                            </button>
+                        </motion.div>
+                    </div>
+
+                    <motion.div
+                        layout={false}
+                        layoutScroll={false}
+                        initial={{ opacity: 0, y: 40 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 0.8 }}
+                        className="w-full min-h-[500px] bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex flex-col font-sans shadow-2xl shadow-dental-teal/10 relative"
                     >
-                        <div className="w-full h-full bg-slate-950 rounded-2xl overflow-hidden border border-slate-800 flex flex-col font-sans">
-                            <div className="bg-slate-900 border-b border-slate-800 p-3 flex items-center gap-2">
-                                <div className="flex gap-1.5">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-                                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-                                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
-                                </div>
-                                <div className="mx-auto bg-slate-800 rounded-md px-24 py-1 text-[10px] text-slate-500 font-mono">dashboard.dentalai.com</div>
+                        <div className="bg-slate-900 border-b border-slate-800 p-3 flex items-center gap-2">
+                            <div className="flex gap-1.5">
+                                <div className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                                <div className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
                             </div>
+                            <div className="mx-auto bg-slate-800 rounded-md px-24 py-1 text-[10px] text-slate-500 font-mono">dashboard.dentalai.com</div>
+                        </div>
 
-                            <div className="flex-1 bg-slate-950 p-6 flex flex-col gap-6">
-                                <div className="grid grid-cols-3 gap-4">
-                                    {[{ label: "AI Calls Handled", val: "412", col: "border-dental-teal" }, { label: "Appointments Booked", val: "89", col: "border-blue-500" }, { label: "Urgent Escalations", val: "14", col: "border-amber-500" }].map(s => (
-                                        <div key={s.label} className={clsx("bg-slate-900 rounded-xl p-4 border-l-2 shadow-sm", s.col)}>
-                                            <p className="text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-1">{s.label}</p>
-                                            <p className="text-2xl font-black text-white">{s.val}</p>
+                        <div className="flex-1 bg-slate-950 p-6 flex flex-col gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                {[{ label: "AI Calls Handled", val: "412", col: "border-dental-teal" }, { label: "Appointments Booked", val: "89", col: "border-blue-500" }, { label: "Urgent Escalations", val: "14", col: "border-amber-500" }].map(s => (
+                                    <div key={s.label} className={clsx("bg-slate-900 rounded-xl p-4 border-l-2 shadow-sm", s.col)}>
+                                        <p className="text-[10px] text-slate-500 uppercase tracking-wider font-bold mb-1">{s.label}</p>
+                                        <p className="text-2xl font-black text-white">{s.val}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="flex-1 bg-slate-900 rounded-xl border border-slate-800 overflow-hidden">
+                                <div className="px-4 py-3 border-b border-slate-800 flex justify-between items-center">
+                                    <h3 className="text-xs font-bold text-white uppercase tracking-wider">Recent Live Calls</h3>
+                                    <span className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-medium">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> Live Sync
+                                    </span>
+                                </div>
+                                <div className="divide-y divide-slate-800/50">
+                                    {[
+                                        { n: "Sarah Jenkins", r: "Emergency Root Canal", t: "2m ago", s: "Urgent", c: "bg-red-500/20 text-red-400 border-red-500/30" },
+                                        { n: "Michael Ross", r: "Check-up Reschedule", t: "15m ago", s: "Booked", c: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30" },
+                                        { n: "Linda Wright", r: "Inquiry: Insurance", t: "1h ago", s: "Pending", c: "bg-amber-500/20 text-amber-400 border-amber-500/30" },
+                                        { n: "David Beckham", r: "Teeth Whitening", t: "3h ago", s: "General", c: "bg-slate-700/50 text-slate-400 border-slate-600" },
+                                    ].map((r, i) => (
+                                        <div key={i} className="px-4 py-3 flex items-center justify-between hover:bg-slate-800/50 transition-colors">
+                                            <div className="flex flex-col gap-0.5">
+                                                <span className="text-sm font-bold text-slate-200">{r.n}</span>
+                                                <span className="text-[10px] text-slate-500">{r.r}</span>
+                                            </div>
+                                            <div className="flex items-center gap-3">
+                                                <span className="text-[10px] text-slate-500">{r.t}</span>
+                                                <span className={clsx("px-2 py-0.5 rounded-full text-[9px] font-bold border uppercase tracking-wider w-16 text-center border-solid", r.c)}>{r.s}</span>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
-                                <div className="flex-1 bg-slate-900 rounded-xl border border-slate-800 overflow-hidden">
-                                    <div className="px-4 py-3 border-b border-slate-800 flex justify-between items-center">
-                                        <h3 className="text-xs font-bold text-white uppercase tracking-wider">Recent Live Calls</h3>
-                                        <span className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-medium">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" /> Live Sync
-                                        </span>
-                                    </div>
-                                    <div className="divide-y divide-slate-800/50">
-                                        {[
-                                            { n: "Sarah Jenkins", r: "Emergency Root Canal", t: "2m ago", s: "Urgent", c: "bg-red-500/20 text-red-400 border-red-500/30" },
-                                            { n: "Michael Ross", r: "Check-up Reschedule", t: "15m ago", s: "Booked", c: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30" },
-                                            { n: "Linda Wright", r: "Inquiry: Insurance", t: "1h ago", s: "Pending", c: "bg-amber-500/20 text-amber-400 border-amber-500/30" },
-                                            { n: "David Beckham", r: "Teeth Whitening", t: "3h ago", s: "General", c: "bg-slate-700/50 text-slate-400 border-slate-600" },
-                                        ].map((r, i) => (
-                                            <div key={i} className="px-4 py-3 flex items-center justify-between hover:bg-slate-800/50 transition-colors">
-                                                <div className="flex flex-col gap-0.5">
-                                                    <span className="text-sm font-bold text-slate-200">{r.n}</span>
-                                                    <span className="text-[10px] text-slate-500">{r.r}</span>
-                                                </div>
-                                                <div className="flex items-center gap-3">
-                                                    <span className="text-[10px] text-slate-500">{r.t}</span>
-                                                    <span className={clsx("px-2 py-0.5 rounded-full text-[9px] font-bold border uppercase tracking-wider w-16 text-center border-solid", r.c)}>{r.s}</span>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                    </ContainerScroll>
+                    </motion.div>
                 </div>
             </section>
 
