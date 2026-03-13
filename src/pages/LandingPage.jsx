@@ -41,53 +41,7 @@ const FEATURES = [
     }
 ];
 
-const TESTIMONIALS = [
-    {
-        quote: "We were losing 15-20 calls a week just to lunchtime overflow. DentalAI picked them all up and converted 80% into booked cleanings within the first month. Incredible ROI.",
-        author: "Dr. Sarah Chen",
-        role: "Lead Orthodontist",
-        clinic: "Lakeside Dental Group",
-        rating: 5
-    },
-    {
-        quote: "The urgent escalation feature is flawless. A patient called at 2 AM with a dry socket, and the AI accurately triaged it, texted me immediately, and briefed me entirely before I called the patient back.",
-        author: "Dr. James Wright",
-        role: "Oral Surgeon",
-        clinic: "Wright Maxillofacial",
-        rating: 5
-    },
-    {
-        quote: "Our front desk staff used to be buried under phone lines. Since launching DentalAI, they actually have time to chat with the patients in the waiting room and focus on treatment plans.",
-        author: "Amanda Torres",
-        role: "Office Manager",
-        clinic: "Bright Smile Family Dentistry",
-        rating: 5
-    }
-];
 
-const PRICING = [
-    {
-        tier: "Starter",
-        price: "$299",
-        desc: "Perfect for single-location sole practitioners.",
-        features: ["Up to 500 AI minutes/mo", "Basic EHR Integration", "Standard Voices", "Email Support"],
-        popular: false
-    },
-    {
-        tier: "Growth",
-        price: "$599",
-        desc: "For busy practices needing advanced triage.",
-        features: ["Up to 1500 AI minutes/mo", "Advanced EHR Sync", "Custom Voice Cloning", "Emergency SMS Alerts", "Priority Support"],
-        popular: true
-    },
-    {
-        tier: "Multi-Location",
-        price: "Custom",
-        desc: "Enterprise logic for dental service organizations.",
-        features: ["Unlimited AI minutes", "Multi-site routing", "Dedicated Account Manager", "Custom analytics & reporting", "Custom SLAs"],
-        popular: false
-    }
-];
 
 const Header = () => {
     const navigate = useNavigate();
@@ -116,7 +70,7 @@ const Header = () => {
 
                 {/* Desktop Links */}
                 <div className="hidden md:flex items-center gap-8">
-                    {["Product", "Solutions", "Pricing", "Security", "Resources"].map((item) => (
+                    {["Product", "Solutions", "Security", "Resources"].map((item) => (
                         <a key={item} href={`#${item.toLowerCase()}`} className="text-sm font-medium text-slate-400 hover:text-white transition-colors">
                             {item}
                         </a>
@@ -148,7 +102,7 @@ const Header = () => {
                         exit={{ opacity: 0, y: -10 }}
                         className="absolute top-full left-0 w-full bg-slate-900 border-b border-slate-800 shadow-xl flex flex-col p-4 md:hidden gap-4"
                     >
-                        {["Product", "Solutions", "Pricing", "Security", "Resources"].map((item) => (
+                        {["Product", "Solutions", "Security", "Resources"].map((item) => (
                             <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMobileMenuOpen(false)} className="text-base font-medium text-slate-300 p-2 rounded-lg hover:bg-slate-800">
                                 {item}
                             </a>
@@ -472,83 +426,6 @@ const LandingPage = () => {
                 </div>
             </section>
 
-            {/* 7. Testimonial Section */}
-            <section className="py-24 px-6 lg:px-8 max-w-7xl mx-auto">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-4">Loved by clinics nationwide.</h2>
-                    <p className="text-lg text-slate-400">Don't just take our word for it.</p>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-6">
-                    {TESTIMONIALS.map((t, i) => (
-                        <div key={i} className="bg-slate-900 border border-slate-800 p-8 rounded-3xl flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 shadow-xl">
-                            <div>
-                                <div className="flex items-center gap-1 mb-6">
-                                    {[...Array(t.rating)].map((_, j) => <Star key={j} className="w-5 h-5 fill-amber-400 text-amber-400" />)}
-                                </div>
-                                <p className="text-slate-300 text-lg leading-relaxed mb-8">"{t.quote}"</p>
-                            </div>
-                            <div className="flex items-center gap-4 border-t border-slate-800 pt-6">
-                                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center font-bold text-white text-lg border border-slate-600">
-                                    {t.author.charAt(0)}
-                                </div>
-                                <div>
-                                    <p className="font-bold text-white text-sm">{t.author}</p>
-                                    <p className="text-xs text-slate-500">{t.role}, {t.clinic}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* 8. Pricing Preview */}
-            <section id="pricing" className="py-24 border-t border-slate-900 bg-slate-950/50 overflow-hidden">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8">
-                    <div className="text-center max-w-2xl mx-auto mb-16">
-                        <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-4">Simple, transparent pricing.</h2>
-                        <p className="text-lg text-slate-400">Scale your front desk without the overhead of hiring. Cancel anytime.</p>
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-8 items-start">
-                        {PRICING.map((plan, i) => (
-                            <div key={i} className={clsx(
-                                "rounded-[2rem] p-8 border relative",
-                                plan.popular ? "bg-slate-900 border-dental-teal shadow-2xl shadow-dental-teal/10 scale-105 z-10" : "bg-slate-900/40 border-slate-800 mt-4 md:mt-0"
-                            )}>
-                                {plan.popular && (
-                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-dental-teal text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">
-                                        Most Popular
-                                    </div>
-                                )}
-                                <h3 className="text-xl font-bold text-white mb-2">{plan.tier}</h3>
-                                <p className="text-sm text-slate-400 mb-6 h-10">{plan.desc}</p>
-                                <div className="mb-6">
-                                    <span className="text-4xl font-black text-white">{plan.price}</span>
-                                    {plan.price !== "Custom" && <span className="text-slate-500">/mo</span>}
-                                </div>
-
-                                <button className={clsx(
-                                    "w-full py-4 rounded-xl font-bold transition-all mb-8 shadow-lg",
-                                    plan.popular ? "bg-white text-slate-950 hover:bg-slate-200" : "bg-slate-800 text-white hover:bg-slate-700"
-                                )}>
-                                    {plan.price === "Custom" ? "Contact Sales" : "Start Free Trial"}
-                                </button>
-
-                                <div className="space-y-4">
-                                    {plan.features.map((feat, j) => (
-                                        <div key={j} className="flex items-center gap-3">
-                                            <Check className="w-4 h-4 text-dental-teal shrink-0" />
-                                            <span className="text-sm text-slate-300">{feat}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
-
             {/* 9. Security & Compliance */}
             <section id="security" className="py-20 border-t border-slate-900">
                 <div className="max-w-4xl mx-auto px-6 text-center">
@@ -607,7 +484,7 @@ const LandingPage = () => {
                     <div>
                         <h4 className="text-white font-bold mb-4">Product</h4>
                         <ul className="space-y-3">
-                            {["Features", "Integrations", "Pricing", "Changelog"].map(link => (
+                            {["Features", "Integrations", "Changelog"].map(link => (
                                 <li key={link}><a href="#" className="text-sm text-slate-500 hover:text-dental-teal transition-colors">{link}</a></li>
                             ))}
                         </ul>
