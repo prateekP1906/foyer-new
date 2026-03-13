@@ -125,11 +125,11 @@ const Header = () => {
 
                 {/* CTA Buttons */}
                 <div className="hidden md:flex items-center gap-4">
-                    <button onClick={() => navigate('/demo')} className="text-sm font-medium text-slate-300 hover:text-white transition-colors flex items-center gap-2">
-                        <Play className="w-4 h-4" /> Watch 2-min Tour
+                    <button onClick={() => navigate('/login')} className="text-sm font-medium text-slate-300 hover:text-white transition-colors flex items-center gap-2">
+                        Login
                     </button>
                     <button onClick={() => navigate('/signup')} className="bg-white text-slate-950 text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-slate-200 transition-colors shadow-lg shadow-white/10">
-                        Book a Demo
+                        Sign Up
                     </button>
                 </div>
 
@@ -154,11 +154,11 @@ const Header = () => {
                             </a>
                         ))}
                         <div className="h-px w-full bg-slate-800 my-2" />
-                        <button onClick={() => { navigate('/demo'); setMobileMenuOpen(false); }} className="text-base font-medium text-slate-300 p-2 text-left flex items-center gap-2">
-                            <Play className="w-4 h-4" /> Watch 2-min Tour
+                        <button onClick={() => { navigate('/login'); setMobileMenuOpen(false); }} className="text-base font-medium text-slate-300 p-2 text-left flex items-center gap-2">
+                            Login
                         </button>
                         <button onClick={() => { navigate('/signup'); setMobileMenuOpen(false); }} className="bg-dental-teal text-white text-base font-semibold px-4 py-3 rounded-xl shadow-lg mt-2 font-center text-center">
-                            Book a Demo
+                            Sign Up
                         </button>
                     </motion.div>
                 )}
@@ -224,10 +224,10 @@ const LandingPage = () => {
                         className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start"
                     >
                         <button onClick={() => navigate('/signup')} className="w-full sm:w-auto bg-white text-slate-950 font-bold px-8 py-4 rounded-xl shadow-xl shadow-white/10 hover:shadow-white/20 hover:scale-105 transition-all outline-none">
-                            Book a Demo
+                            Sign Up
                         </button>
-                        <button onClick={() => navigate('/demo')} className="w-full sm:w-auto bg-slate-900 border border-slate-800 text-white font-semibold px-8 py-4 rounded-xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 outline-none group">
-                            See Live Dashboard <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
+                        <button onClick={() => navigate('/login')} className="w-full sm:w-auto bg-slate-900 border border-slate-800 text-white font-semibold px-8 py-4 rounded-xl hover:bg-slate-800 transition-all flex items-center justify-center gap-2 outline-none group">
+                            Login <ChevronRight className="w-4 h-4 text-slate-500 group-hover:text-white transition-colors" />
                         </button>
                     </motion.div>
                 </div>
@@ -576,11 +576,14 @@ const LandingPage = () => {
                         </p>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                             <button onClick={() => navigate('/signup')} className="bg-slate-950 text-white border border-transparent font-bold px-10 py-5 rounded-2xl hover:bg-slate-900 hover:scale-105 transition-all shadow-xl">
-                                Book Your Demo Today
+                                Sign Up Now
+                            </button>
+                            <button onClick={() => navigate('/login')} className="bg-transparent text-slate-950 border border-slate-950/20 font-bold px-10 py-5 rounded-2xl hover:bg-slate-950/5 transition-all">
+                                Login to Dashboard
                             </button>
                         </div>
                         <p className="text-sm font-medium text-white/70 mt-6 flex items-center justify-center gap-2">
-                            <Lock className="w-4 h-4" /> No credit card required to demo.
+                            <Lock className="w-4 h-4" /> No credit card required to sign up.
                         </p>
                     </div>
                 </div>
