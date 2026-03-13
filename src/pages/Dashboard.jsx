@@ -198,6 +198,25 @@ const Dashboard = () => {
         fetchDataAndUser();
     }, []);
 
+    // Supabase Realtime: auto-update dashboard on appointment changes
+    useEffect(() => {
+        const channel = supabase
+            .channel('dashboard-realtime')
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'appointments' },
+                (payload) => {
+                    console.log('Realtime appointment change:', payload.eventType);
+                    fetchDataAndUser();
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
+    }, []);
+
     if (loading) return (
         <div className="flex items-center justify-center h-screen bg-slate-50">
             <div className="flex flex-col items-center gap-4">
