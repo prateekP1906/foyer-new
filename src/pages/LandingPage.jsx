@@ -5,18 +5,12 @@ import {
     Phone, Calendar, AlertTriangle, Shield, CheckCircle2,
     ArrowRight, Play, Server, Clock, Activity, Star,
     TrendingUp, Users, Lock, ChevronRight, Menu, X,
-    PhoneCall, Building2, Stethoscope, Briefcase, Check
+    PhoneCall, Stethoscope, Briefcase, Check
 } from 'lucide-react';
 import clsx from 'clsx';
 
 // Constants & Data Placeholders
-const LOGO_COMPANIES = [
-    { name: "Pacific Dental Services", id: 1 },
-    { name: "SmileBrands", id: 2 },
-    { name: "Aspen Dental", id: 3 },
-    { name: "Heartland Dental", id: 4 },
-    { name: "Local Dental Groups", id: 5 }
-];
+
 
 const FEATURES = [
     {
@@ -65,7 +59,7 @@ const Header = () => {
                     <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-dental-teal to-cyan-500 flex items-center justify-center shadow-lg shadow-dental-teal/20">
                         <Activity className="w-5 h-5 text-white" />
                     </div>
-                    <span className="text-xl font-bold tracking-tight text-white">Dental<span className="text-dental-teal">AI</span></span>
+                    <span className="text-xl font-bold tracking-tight text-white">AI-<span className="text-dental-teal">Receptionist</span></span>
                 </div>
 
                 {/* Desktop Links */}
@@ -149,7 +143,7 @@ const LandingPage = () => {
                             <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-dental-teal opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-dental-teal"></span>
                         </span>
-                        <span className="text-xs font-semibold text-slate-300">DentalAI 2.0 is live</span>
+                        <span className="text-xs font-semibold text-slate-300">AI-Receptionist 2.0 is live</span>
                     </motion.div>
 
                     <motion.h1
@@ -247,44 +241,13 @@ const LandingPage = () => {
                 </motion.div>
             </section>
 
-            {/* 3. Social Proof */}
-            <section className="py-12 border-y border-slate-900 bg-slate-950/50">
-                <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-                    <p className="text-xs font-semibold tracking-widest text-slate-500 uppercase mb-8">Trusted by thriving dental teams globally</p>
-                    <div className="flex flex-wrap justify-center items-center gap-10 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-                        {LOGO_COMPANIES.map(logo => (
-                            <div key={logo.id} className="text-lg md:text-xl font-bold text-slate-400 flex items-center gap-2 cursor-default">
-                                <Building2 className="w-5 h-5" /> {logo.name}
-                            </div>
-                        ))}
-                    </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto border-t border-slate-800 pt-12">
-                        <div>
-                            <p className="text-3xl font-extrabold text-white">1.2M+</p>
-                            <p className="text-sm font-medium text-slate-500 mt-1">Calls Handled</p>
-                        </div>
-                        <div>
-                            <p className="text-3xl font-extrabold text-white">84%</p>
-                            <p className="text-sm font-medium text-slate-500 mt-1">Booking CVR</p>
-                        </div>
-                        <div>
-                            <p className="text-3xl font-extrabold text-white">{"<"}1s</p>
-                            <p className="text-sm font-medium text-slate-500 mt-1">Response Time</p>
-                        </div>
-                        <div>
-                            <p className="text-3xl font-extrabold text-white">100%</p>
-                            <p className="text-sm font-medium text-slate-500 mt-1">HIPAA Secure</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* 4. Core Benefits */}
             <section id="product" className="py-24 px-6 lg:px-8 max-w-7xl mx-auto">
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-6">Your practice, supercharged.</h2>
-                    <p className="text-lg text-slate-400">DentalAI doesn’t just answer phones—it actively manages your schedule, acts on patient intent, and protects your bottom line.</p>
+                    <p className="text-lg text-slate-400">AI-Receptionist doesn’t just answer phones—it actively manages your schedule, acts on patient intent, and protects your bottom line.</p>
                 </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -347,7 +310,7 @@ const LandingPage = () => {
                         <div className="flex-1">
                             <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">Books directly into your schedule.</h2>
                             <p className="text-lg text-slate-400 mb-8 leading-relaxed">
-                                No more "we'll call you back to confirm." DentalAI has read and write access to your practice management system, finding real-time slots and parsing procedure lengths automatically.
+                                No more "we'll call you back to confirm." AI-Receptionist has read and write access to your practice management system, finding real-time slots and parsing procedure lengths automatically.
                             </p>
                             <ul className="space-y-4">
                                 {["Cross-references multiple provider schedules", "Auto-sends intake forms and confirmation texts", "Understands insurance network constraints"].map((li, i) => (
@@ -399,10 +362,10 @@ const LandingPage = () => {
 
                         <div className="grid md:grid-cols-3 gap-8 mt-12 bg-slate-950/40 rounded-3xl p-8 backdrop-blur-sm border border-slate-800/50">
                             <div>
-                                <p className="text-slate-400 text-sm font-medium mb-2">Before DentalAI</p>
+                                <p className="text-slate-400 text-sm font-medium mb-2">Before AI-Receptionist</p>
                                 <p className="text-xl font-bold text-slate-500 line-through decoration-red-500/50">35% missed calls</p>
                                 <div className="h-px bg-slate-800 my-4" />
-                                <p className="text-slate-400 text-sm font-medium mb-2">After DentalAI</p>
+                                <p className="text-slate-400 text-sm font-medium mb-2">After AI-Receptionist</p>
                                 <p className="text-2xl font-extrabold text-emerald-400">0% missed calls</p>
                             </div>
                             <div className="hidden md:block w-px bg-slate-800 h-full mx-auto" />
@@ -449,7 +412,7 @@ const LandingPage = () => {
                             Ready to upgrade your front desk?
                         </h2>
                         <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto font-medium">
-                            Join hundreds of modern practices using DentalAI to capture every lead and deliver a flawless patient experience.
+                            Capture every lead and deliver a flawless patient experience with AI-Receptionist.
                         </p>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                             <button onClick={() => navigate('/signup')} className="bg-slate-950 text-white border border-transparent font-bold px-10 py-5 rounded-2xl hover:bg-slate-900 hover:scale-105 transition-all shadow-xl">
@@ -474,7 +437,7 @@ const LandingPage = () => {
                             <div className="w-6 h-6 rounded-md bg-dental-teal flex items-center justify-center">
                                 <Activity className="w-3 h-3 text-white" />
                             </div>
-                            <span className="text-xl font-bold tracking-tight text-white">Dental<span className="text-dental-teal">AI</span></span>
+                            <span className="text-xl font-bold tracking-tight text-white">AI-<span className="text-dental-teal">Receptionist</span></span>
                         </div>
                         <p className="text-sm text-slate-500 leading-relaxed max-w-sm">
                             The intelligent voice infrastructure for modern dental practices. Automate bookings, handle emergencies, and scale operations.
@@ -510,7 +473,7 @@ const LandingPage = () => {
                 </div>
 
                 <div className="max-w-7xl mx-auto border-t border-slate-900 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-                    <p className="text-sm text-slate-600">© 2026 DentalAI Technologies Inc. All rights reserved.</p>
+                    <p className="text-sm text-slate-600">© 2026 AI-Receptionist. All rights reserved.</p>
                     <div className="flex gap-4">
                         <a href="#" className="text-slate-600 hover:text-white transition-colors">Twitter</a>
                         <a href="#" className="text-slate-600 hover:text-white transition-colors">LinkedIn</a>
