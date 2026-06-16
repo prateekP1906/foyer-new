@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Profile from './pages/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
+import ChatBot from './components/ChatBot';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           </ProtectedRoute>
         } />
       </Routes>
+      <ChatBot />
     </BrowserRouter>
   );
 }
